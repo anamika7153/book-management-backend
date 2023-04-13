@@ -4,6 +4,7 @@ const db = require('./database')
 
 const express = require('express')
 const app = express();
+app.use(express.json())
 
 app.get("/", (req,res) => {
     // return res.json({"Welcome": `to my Book Company Backend`});
@@ -91,6 +92,26 @@ app.get("/publication-isbn/:isbn", async (req,res) => {
     }
     console.log(getSpecificPublications)
     return res.json(getSpecificPublications)
+})
+
+//add a book
+app.post("/book", (req,res) => {
+    // const {newBook} = req.body;
+    // db.books.push(newBook)
+    db.books.push(req.body);
+    return res.json(db.books);
+})
+
+//add an author
+app.post("/author", (req,res) => {
+    db.authors.push(req.body);
+    return res.json(db.authors);
+})
+
+//add an publication
+app.post("/publication", (req,res) => {
+    db.publications.push(req.body);
+    return res.json(db.publications);
 })
 
 app.listen(3000, ()=> {
