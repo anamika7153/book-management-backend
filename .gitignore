@@ -1,0 +1,41 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build output
+build/
+dist/
+
+# Log files
+logs/
+*.log
+
+# Environment variables
+.env
+.env.*
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Editor specific files
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-*
+
+# Compiled binary addons
+build/Release/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Test output
+test-results/
+
+# Dependency lock files
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
