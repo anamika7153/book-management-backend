@@ -64,16 +64,12 @@ app.get("/author/:id", (req,res) => {
 // http://localhost:3000/author-isbn/12345two
 app.get("/author-isbn/:isbn", async (req,res) => {
     let {isbn} = req.params;
-    console.log(isbn)
     // isbn = Number(isbn)
     const getSpecificAuthor = await db.authors.filter((author) => author.books.includes(isbn)) 
     if(getSpecificAuthor.length ===0) {
         return res.json({"error": `No author found for ISBN of ${isbn}`});
     }
     console.log(getSpecificAuthor)
-    // if( getAuthors.length === 0){
-    // return res.json({"error": `No author found for ISBN of ${isbn}`});
-    // }
     return res.json(getSpecificAuthor)
 })
 
@@ -84,6 +80,19 @@ app.get("/publications", (req,res) => {
     return res.json(getAllPublications)
 })
 
+//get publications of isbn
+// http://localhost:3000/publication-isbn/12345two
+app.get("/publication-isbn/:isbn", async (req,res) => {
+    let {isbn} = req.params;
+    // isbn = Number(isbn)
+    const getSpecificPublications = await db.publications.filter((publication) => publication.books.includes(isbn)) 
+    if(getSpecificPublications.length ===0) {
+        return res.json({"error": `No Publication found for ISBN of ${isbn}`});
+    }
+    console.log(getSpecificPublications)
+    return res.json(getSpecificPublications)
+})
+
 app.listen(3000, ()=> {
-    console.log("Server is running!")
+    console.log(`Server is running at port ${3000}!`)
 })
