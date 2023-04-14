@@ -156,6 +156,78 @@ app.put("/publication-update/:isbn", (req,res) => {
     return res.json(db.publications);
 })
 
+//delete a book
+// http://localhost:3000/book-delete/12345one
+app.delete("/book-delete/:isbn", (req,res) => {
+    const {isbn} = req.params;
+    const filteredBooks = db.books.filter((book) => {
+        return book.ISBN !== isbn
+    })
+    db.books = filteredBooks
+    return res.json(db.books);
+})
+
+//delete author of book
+// http://localhost:3000/book-author-delete/12345one/1
+app.delete("/book-author-delete/:isbn/:id", (req,res) => {
+    let {isbn,id} = req.params;
+    id = Number(id)
+    db.books.forEach((book) => {
+        if(book.ISBN === isbn) {
+            if(!book.authors.includes(id)) {
+                return;
+            }
+            book.authors = book.authors.filter((author) => author!==id)
+            return book;
+        }
+        return book;
+    })
+    return res.json(db.books);
+})
+
+//delete book of author 
+// http://localhost:3000/author-book-delete/1/12345one
+app.delete("/author-book-delete/:id/:isbn", (req,res) => {
+    let {id,isbn} = req.params;
+    // id = Number(id)
+    db.authors.forEach((author) => {
+        if(author.id == id) {
+            if(!author.books.includes(isbn)) {
+                return;
+            }
+            author.books = author.books.filter((author) => author!==isbn)
+            return author;
+        }
+        return author;
+    })
+    return res.json(db.authors);
+})
+
+// //delete a book
+// // http://localhost:3000/book-delete/12345one
+// app.delete("/book-delete/:isbn", (req,res) => {
+//     const {isbn} = req.params;
+//     const filteredBooks = db.books.filter((book) => {
+//         return book.ISBN !== isbn
+//     })
+//     db.books = filteredBooks
+//     return res.json(db.books);
+// })
+
+//delete a publication
+// http://localhost:3000/publication-delete/1
+app.delete("/publication-delete/:isbn", (req,res) => {
+    const {id} = req.params;
+    db.publications.forEach((publication) => {
+        if(publication.id === id) {
+            // console.log(...publication, ...req.body)
+            return {...publication, ...req.body}
+        }
+        return publication
+    })
+    return res.json(db.publications);
+})
+
 app.listen(3000, ()=> {
     console.log(`Server is running at port ${3000}!`)
 })
