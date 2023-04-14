@@ -114,6 +114,48 @@ app.post("/publication", (req,res) => {
     return res.json(db.publications);
 })
 
+//update a book
+// http://localhost:3000/book-update/12345two
+app.put("/book-update/:isbn", (req,res) => {
+    const {isbn} = req.params;
+    db.books.forEach((book) => {
+        if(book.ISBN === isbn) {
+            // console.log(...book, ...req.body)
+            return {...book, ...req.body}
+        }
+        return book
+    })
+    return res.json(db.books);
+})
+
+//update a author
+// http://localhost:3000/author-update/1
+app.put("/author-update/:isbn", (req,res) => {
+    const {id} = req.params;
+    db.authors.forEach((author) => {
+        if(author.id === id) {
+            // console.log(...author, ...req.body)
+            return {...author, ...req.body}
+        }
+        return author
+    })
+    return res.json(db.authors);
+})
+
+//update a publication
+// http://localhost:3000/publication-update/1
+app.put("/publication-update/:isbn", (req,res) => {
+    const {id} = req.params;
+    db.publications.forEach((publication) => {
+        if(publication.id === id) {
+            // console.log(...publication, ...req.body)
+            return {...publication, ...req.body}
+        }
+        return publication
+    })
+    return res.json(db.publications);
+})
+
 app.listen(3000, ()=> {
     console.log(`Server is running at port ${3000}!`)
 })
